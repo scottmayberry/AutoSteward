@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     Button trashFineButton;
     Button kitchenFineButton;
     Button asdfasdf;
+    Button asdfasdfasdf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
