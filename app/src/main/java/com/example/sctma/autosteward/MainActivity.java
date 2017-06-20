@@ -1,11 +1,19 @@
 package com.example.sctma.autosteward;
 
+import android.renderscript.Sampler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Space;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +24,34 @@ public class MainActivity extends AppCompatActivity {
     Button trashButton;
     Button trashFineButton;
     Button kitchenFineButton;
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference fullRef;
+    ChildEventListener listenForMessages = new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            dataSnapshot.getValue();
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
 
     @Override
@@ -26,15 +62,22 @@ public class MainActivity extends AppCompatActivity {
         updateDishesUI(false);
         updateMidnightsUI(false);
         updateTrashUI(false);
-        dishButton = (Button)findViewById(R.id.dishesButton);
-        dishFineButton = (Button)findViewById(R.id.dishFineButton);
-        midnightsButton = (Button)findViewById(R.id.midnightsButton);
-        midnightsFineButton = (Button)findViewById(R.id.midnightsFineButton);
-        trashButton = (Button)findViewById(R.id.trashButton);
-        trashFineButton = (Button)findViewById(R.id.trashFineButton);
-        kitchenFineButton = (Button)findViewById(R.id.kitchenFineButton);
-
+        dishButton = (Button) findViewById(R.id.dishesButton);
+        dishFineButton = (Button) findViewById(R.id.dishFineButton);
+        midnightsButton = (Button) findViewById(R.id.midnightsButton);
+        midnightsFineButton = (Button) findViewById(R.id.midnightsFineButton);
+        trashButton = (Button) findViewById(R.id.trashButton);
+        trashFineButton = (Button) findViewById(R.id.trashFineButton);
+        kitchenFineButton = (Button) findViewById(R.id.kitchenFineButton);
+        fullRef = firebaseDatabase.getReference();
+        fullRef.child("StewardInfo");
+        fullRef.child("CurrentFines");
+        fullRef.child("CurrentSlots");
+        fullRef.addChildEventListener(listenForMessages);
+        fullRef.child("Messages2").setValue("2", 3);
     }
+
+
     protected void updateKitchenUI(boolean onOff)
     {
         int vis;
