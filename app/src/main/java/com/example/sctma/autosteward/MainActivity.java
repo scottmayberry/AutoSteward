@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
     Button trashButton;
     Button trashFineButton;
     Button kitchenFineButton;
-    Button asdfasdf;
-    Button asdfasdfasdf;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +26,14 @@ public class MainActivity extends AppCompatActivity {
         updateDishesUI(false);
         updateMidnightsUI(false);
         updateTrashUI(false);
+        dishButton = (Button)findViewById(R.id.dishesButton);
+        dishFineButton = (Button)findViewById(R.id.dishFineButton);
+        midnightsButton = (Button)findViewById(R.id.midnightsButton);
+        midnightsFineButton = (Button)findViewById(R.id.midnightsFineButton);
+        trashButton = (Button)findViewById(R.id.trashButton);
+        trashFineButton = (Button)findViewById(R.id.trashFineButton);
+        kitchenFineButton = (Button)findViewById(R.id.kitchenFineButton);
+
     }
     protected void updateKitchenUI(boolean onOff)
     {

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "588554062721",
+    "firebase_url": "https://stewarddatabase-629c6.firebaseio.com",
+    "project_id": "stewarddatabase-629c6",
+    "storage_bucket": "stewarddatabase-629c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588554062721:android:634105a272a156f3",
+        "android_client_info": {
+          "package_name": "com.example.sctma.autosteward"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588554062721-tdqdaag0hjphjtrc1i50sncho6p8aqva.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sctma.autosteward",
+            "certificate_hash": "41786cda04b27345720a7edfd8c516201de9c1ea"
+          }
+        },
+        {
+          "client_id": "588554062721-rsdildtsgak6ejiqdp0dktkak5khaob9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK7sPxCL7MAHETK9fkNInRNqNYph7aiHo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588554062721-rsdildtsgak6ejiqdp0dktkak5khaob9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
