@@ -3,6 +3,7 @@ package com.example.sctma.autosteward;
 import android.renderscript.Sampler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -26,10 +27,16 @@ public class MainActivity extends AppCompatActivity {
     Button kitchenFineButton;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference fullRef;
-    ChildEventListener listenForMessages = new ChildEventListener() {
+    ChildEventListener messageListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            dataSnapshot.getValue();
+            TextMessage textMessage = new TextMessage((String)dataSnapshot.child("number").getValue(),
+                    (String)dataSnapshot.child("message").getValue());
+            SmsManager sms = SmsManager.getDefault();
+            sms.sendTextMessage("+17134193527", null, textMessage.getMessage(), null, null);
+            //dataSnapshot.getRef().setValue(null);
+
+
         }
 
         @Override
@@ -69,14 +76,11 @@ public class MainActivity extends AppCompatActivity {
         trashButton = (Button) findViewById(R.id.trashButton);
         trashFineButton = (Button) findViewById(R.id.trashFineButton);
         kitchenFineButton = (Button) findViewById(R.id.kitchenFineButton);
-        fullRef = firebaseDatabase.getReference();
-        fullRef.child("StewardInfo");
+        fullRef = FirebaseDatabase.getInstance().getReference();
         fullRef.child("CurrentFines");
         fullRef.child("CurrentSlots");
-        fullRef.addChildEventListener(listenForMessages);
-        fullRef.child("Messages2").setValue("2", 3);
+        fullRef.child("Messages").addChildEventListener(messageListener);
     }
-
 
     protected void updateKitchenUI(boolean onOff)
     {
