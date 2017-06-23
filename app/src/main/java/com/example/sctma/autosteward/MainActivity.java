@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     static PasswordHolder passwordHolder;
     static ArrayList<Fine> pickUp;
     //FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference fullRef;
+    static DatabaseReference fullRef;
 
     static final int DISH_SLOT_REQUEST = 1;
     static final int DISH_FINE_REQUEST = 2;
@@ -602,7 +602,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void completeDishes(View v) {
         Intent intent = new Intent(this, Checker.class);
-
+        intent.putExtra("REQUEST", DISH_SLOT_REQUEST);
+        intent.putExtra("SLOTNUM", 0);
         startActivityForResult(intent, DISH_SLOT_REQUEST);
     }
     public void completeDishFines(View v)

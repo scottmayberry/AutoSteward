@@ -20,9 +20,10 @@
         app:layout_constraintLeft_toLeftOf="parent">
 
         <Space
-            android:layout_weight="1"
+            android:id="@+id/space1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/warningText"
@@ -35,13 +36,14 @@
             android:id="@+id/slotOnlyButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="sendResultBack"
+            android:onClick="slotOnly"
             android:text="Complete Only Slot" />
 
         <Space
-            android:layout_weight="1"
+            android:id="@+id/space2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/completeAllButton"
@@ -51,9 +53,10 @@
             android:text="Complete Slot and Fines" />
 
         <Space
-            android:layout_weight="1"
+            android:id="@+id/space3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
