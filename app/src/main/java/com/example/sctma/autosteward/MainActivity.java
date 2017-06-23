@@ -1,5 +1,6 @@
 package com.example.sctma.autosteward;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -36,18 +37,32 @@ public class MainActivity extends AppCompatActivity {
     Button trashButton;
     Button trashFineButton;
     Button kitchenFineButton;
-    ArrayList<Fine> dishFines;
-    ArrayList<Fine> midnightFines;
-    ArrayList<Fine> trashFines;
-    ArrayList<Fine> kitchenFines;
-    ArrayList<Brother>[] brothers;
-    Slot[] slots;
-    String[] stewardInfo;
-    PasswordHolder passwordHolder;
+    static ArrayList<Fine> dishFines;
+    static ArrayList<Fine> midnightFines;
+    static ArrayList<Fine> trashFines;
+    static ArrayList<Fine> kitchenFines;
+    static ArrayList<Brother>[] brothers;
+    static Slot[] slots;
+    static String[] stewardInfo;
+    static PasswordHolder passwordHolder;
+    static ArrayList<Fine> pickUp;
     //FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference fullRef;
 
-    final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
+    static final int DISH_SLOT_REQUEST = 1;
+    static final int DISH_FINE_REQUEST = 2;
+    static final int MIDNIGHT_SLOT_REQUEST = 3;
+    static final int MIDNIGHT_FINE_REQUEST = 4;
+    static final int TRASH_SLOT_REQUEST = 5;
+    static final int TRASH_FINE_REQUEST = 6;
+    static final int KITCHEN_FINE_REQUEST = 7;
+
+    static final int OPERATION_CANCELLED = 0;
+    static final int SLOT_ONLY_RESPONSE = 1;
+    static final int SLOT_AND_FINE_RESPONSE = 2;
+    static final int FINE_RESPONSE = 3;
+
+
 
     ChildEventListener messageListener = new ChildEventListener() {
         @Override
@@ -563,7 +578,8 @@ public class MainActivity extends AppCompatActivity {
         trashFines = new ArrayList<>();
         slots = new Slot[3];
         stewardInfo = new String[2];
-        
+        pickUp = new ArrayList<>();
+
         //add listeners for new information
         //listeners for brothers
         fullRef.child("BrotherInfo").child("Seniors").addChildEventListener(seniorListener);
@@ -584,16 +600,10 @@ public class MainActivity extends AppCompatActivity {
         //listener for passwords
         fullRef.child("Passwords").addChildEventListener(passwordListener);
     }
-    public void completeDishes(View v)
-    {
-        /*Intent intent = new Intent(this, );
-        intent.putExtra("SLOT", slots[0]);
-        intent.putExtra("DISH_FINES", dishFines);*/
-        System.out.println(brothers[0]);
-        System.out.println(brothers[1]);
-        System.out.println(brothers[2]);
-        System.out.println(brothers[3]);
+    public void completeDishes(View v) {
+        Intent intent = new Intent(this, Checker.class);
 
+        startActivityForResult(intent, DISH_SLOT_REQUEST);
     }
     public void completeDishFines(View v)
     {
@@ -618,6 +628,13 @@ public class MainActivity extends AppCompatActivity {
     public void completeKitchenFines(View v)
     {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        System.out.println(resultCode);
+        System.out.println(brothers);
     }
 
     public void setPasswordInfo(DataSnapshot dataSnapshot)

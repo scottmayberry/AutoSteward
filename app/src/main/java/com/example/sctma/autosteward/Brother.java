@@ -20,43 +20,43 @@ public class Brother {
         this.key = key;
     }
 
-    public int getKey() {
+    public synchronized int getKey() {
         return key;
     }
 
-    public void setKey(int key) {
+    public synchronized  void setKey(int key) {
         this.key = key;
     }
 
-    public String getEmail() {
+    public synchronized String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public synchronized void setEmail(String email) {
         this.email = email;
     }
 
-    public String getName() {
+    public synchronized String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public synchronized void setName(String name) {
         this.name = name;
     }
 
-    public String getPhone() {
+    public synchronized String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public synchronized void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public double getSlotsMissed() {
+    public synchronized double getSlotsMissed() {
         return slotsMissed;
     }
 
-    public void setSlotsMissed(double slotsMissed) {
+    public synchronized void setSlotsMissed(double slotsMissed) {
         this.slotsMissed = slotsMissed;
     }
 }

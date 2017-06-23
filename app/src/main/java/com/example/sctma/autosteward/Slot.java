@@ -24,51 +24,51 @@ public class Slot implements Serializable {
         this.key = key;
     }
 
-    public String getKey() {
+    public synchronized String getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public synchronized void setKey(String key) {
         this.key = key;
     }
 
-    public int getOD() {
+    public synchronized  int getOD() {
         return OD;
     }
 
-    public void setOD(int OD) {
+    public synchronized void setOD(int OD) {
         this.OD = OD;
     }
 
-    public int getDayOfWeek() {
+    public synchronized int getDayOfWeek() {
         return dayOfWeek;
     }
 
-    public void setDayOfWeek(int dayOfWeek) {
+    public synchronized void setDayOfWeek(int dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public String getExtension() {
+    public synchronized String getExtension() {
         return extension;
     }
 
-    public void setExtension(String extension) {
+    public synchronized void setExtension(String extension) {
         this.extension = extension;
     }
 
-    public String getName() {
+    public synchronized String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public synchronized void setName(String name) {
         this.name = name;
     }
 
-    public String getSlot() {
+    public synchronized String getSlot() {
         return slot;
     }
 
-    public void setSlot(String slot) {
+    public synchronized void setSlot(String slot) {
         this.slot = slot;
     }
 }

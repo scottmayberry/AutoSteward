@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Complete"></activity>
+        <activity android:name=".Complete" />
+        <activity android:name=".Checker"></activity>
     </application>
 
 </manifest>

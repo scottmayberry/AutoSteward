@@ -1,10 +1,12 @@
 package com.example.sctma.autosteward;
 
+import java.io.Serializable;
+
 /**
  * Created by SMAYBER8 on 6/22/2017.
  */
 
-public class PasswordHolder {
+public class PasswordHolder implements Serializable {
     private boolean protectFines;
     private boolean protectSlots;
     private String dishSlot;
@@ -32,43 +34,43 @@ public class PasswordHolder {
         this.master = master;
     }
 
-    public boolean isProtectFines() {
+    public synchronized  boolean isProtectFines() {
         return protectFines;
     }
 
-    public void setProtectFines(boolean protectFines) {
+    public synchronized  void setProtectFines(boolean protectFines) {
         this.protectFines = protectFines;
     }
 
-    public boolean isProtectSlots() {
+    public synchronized boolean isProtectSlots() {
         return protectSlots;
     }
 
-    public void setProtectSlots(boolean protectSlots) {
+    public synchronized void setProtectSlots(boolean protectSlots) {
         this.protectSlots = protectSlots;
     }
 
-    public String getDishSlot() {
+    public synchronized String getDishSlot() {
         return dishSlot;
     }
 
-    public void setDishSlot(String dishSlot) {
+    public synchronized void setDishSlot(String dishSlot) {
         this.dishSlot = dishSlot;
     }
 
-    public String getDishFine() {
+    public synchronized String getDishFine() {
         return dishFine;
     }
 
-    public void setDishFine(String dishFine) {
+    public synchronized void setDishFine(String dishFine) {
         this.dishFine = dishFine;
     }
 
-    public String getMidnightSlot() {
+    public synchronized String getMidnightSlot() {
         return midnightSlot;
     }
 
-    public void setMidnightSlot(String midnightSlot) {
+    public synchronized void setMidnightSlot(String midnightSlot) {
         this.midnightSlot = midnightSlot;
     }
 
@@ -76,19 +78,19 @@ public class PasswordHolder {
         return midnightFine;
     }
 
-    public void setMidnightFine(String midnightFine) {
+    public synchronized void setMidnightFine(String midnightFine) {
         this.midnightFine = midnightFine;
     }
 
-    public String getTrashSlot() {
+    public synchronized String getTrashSlot() {
         return trashSlot;
     }
 
-    public void setTrashSlot(String trashSlot) {
+    public synchronized void setTrashSlot(String trashSlot) {
         this.trashSlot = trashSlot;
     }
 
-    public String getTrashFine() {
+    public synchronized String getTrashFine() {
         return trashFine;
     }
 
@@ -96,19 +98,19 @@ public class PasswordHolder {
         this.trashFine = trashFine;
     }
 
-    public String getKitchenFine() {
+    public synchronized String getKitchenFine() {
         return kitchenFine;
     }
 
-    public void setKitchenFine(String kitchenFine) {
+    public synchronized void setKitchenFine(String kitchenFine) {
         this.kitchenFine = kitchenFine;
     }
 
-    public String getMaster() {
+    public synchronized String getMaster() {
         return master;
     }
 
-    public void setMaster(String master) {
+    public synchronized void setMaster(String master) {
         this.master = master;
     }
 }
