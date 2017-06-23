@@ -23,7 +23,8 @@
         <activity android:name=".Complete" />
         <activity android:name=".Checker" />
         <activity android:name=".PasswordChecker" />
-        <activity android:name=".ChooseSplit"></activity>
+        <activity android:name=".ChooseSplit" />
+        <activity android:name=".SplitMoney"></activity>
     </application>
 
 </manifest>

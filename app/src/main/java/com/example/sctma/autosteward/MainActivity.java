@@ -590,7 +590,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void completeMidnightFines(View v)
     {
-
+        Intent intent = new Intent(this, ChooseSplit.class);
+        intent.putExtra("REQUEST", MIDNIGHT_FINE_REQUEST);
+        intent.putExtra("SLOTNUM", 1);
+        startActivityForResult(intent, MIDNIGHT_FINE_REQUEST);
     }
     public void completeTrash(View v)
     {

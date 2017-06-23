@@ -24,7 +24,7 @@ public class Complete extends AppCompatActivity {
         Intent intent = getIntent();
         slotnum = intent.getIntExtra("SLOTNUM", 0);
         pickUpFines = intent.getBooleanExtra("FINES?",false);
-        completeSlot = intent.getBooleanExtra("SLOT?", true);
+        completeSlot = intent.getBooleanExtra("SLOT?", false);
         if(completeSlot)
             MainActivity.fullRef.child("CurrentSlots").child("" + slotnum).child("name").setValue("Done");
         if(pickUpFines)
