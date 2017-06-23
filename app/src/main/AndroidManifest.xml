@@ -21,7 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Complete" />
-        <activity android:name=".Checker"></activity>
+        <activity android:name=".Checker" />
+        <activity android:name=".PasswordChecker" />
+        <activity android:name=".ChooseSplit"></activity>
     </application>
 
 </manifest>

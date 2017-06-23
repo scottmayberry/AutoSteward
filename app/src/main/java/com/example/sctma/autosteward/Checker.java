@@ -26,19 +26,31 @@ public class Checker extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checker);
         Intent intent = getIntent();
-        request = intent.getIntExtra("REQUEST", 0);
         slotnum = intent.getIntExtra("SLOTNUM", 0);
         completeAll = ((Button) findViewById (R.id.completeAllButton));
         slotOnly = ((Button) findViewById(R.id.slotOnlyButton));
         fines = true;
-        if(MainActivity.dishFines.size() == 0)
+        int size = 0;
+        switch(slotnum)
+        {
+            case 0:size = MainActivity.dishFines.size();
+                break;
+            case 1: size = MainActivity.midnightFines.size();
+                break;
+            case 2: size = MainActivity.trashFines.size();
+                break;
+        }
+        if(size == 0)
         {
 
             completeAll.setVisibility(View.GONE);
             ((Space) findViewById(R.id.space2)).setVisibility(View.GONE);
             ((TextView) findViewById(R.id.warningText)).setVisibility(View.GONE);
+            slotOnly.setText("Complete Slot");
             fines = false;
         }
+        else
+            slotOnly.setText("Complete Only Slot");
 
         timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -56,13 +68,27 @@ public class Checker extends AppCompatActivity {
         if(fines)
         {//fines, handle that
             //go to split screen, remove name for the picker
-
+            intent = new Intent(this, PasswordChecker.class);
+            intent.putExtra("SLOTNUM", slotnum);
+            intent.putExtra("FINES?", false);
+            intent.putExtra("SLOT?", true);
+            intent.putExtra("OVERRIDE", true);
+            intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+            startActivity(intent);
+            finish();
         }
         else
         {//no fines. Go to complete
             if(MainActivity.passwordHolder.isProtectSlots()){
                 //password protected
-
+                intent = new Intent(this, PasswordChecker.class);
+                intent.putExtra("SLOTNUM", slotnum);
+                intent.putExtra("FINES?", fines);
+                intent.putExtra("SLOT?", true);
+                intent.putExtra("OVERRIDE", false);
+                intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+                startActivity(intent);
+                finish();
             }
             else
             {

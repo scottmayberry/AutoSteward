@@ -64,35 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    ChildEventListener messageListener = new ChildEventListener() {
-        @Override
-        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            TextMessage textMessage = new TextMessage((String)dataSnapshot.child("number").getValue(),
-                    (String)dataSnapshot.child("message").getValue());
-
-
-        }
-
-        @Override
-        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-        }
-
-        @Override
-        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    };
     ChildEventListener dishFinesListener = new ChildEventListener() {
 
         @Override
@@ -612,7 +583,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void completeMidnights(View v)
     {
-
+        Intent intent = new Intent(this, Checker.class);
+        intent.putExtra("REQUEST", MIDNIGHT_SLOT_REQUEST);
+        intent.putExtra("SLOTNUM", 1);
+        startActivityForResult(intent, MIDNIGHT_SLOT_REQUEST);
     }
     public void completeMidnightFines(View v)
     {

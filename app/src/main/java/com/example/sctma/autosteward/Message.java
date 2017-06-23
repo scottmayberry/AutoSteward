@@ -1,16 +1,13 @@
 package com.example.sctma.autosteward;
 
-/**
- * Created by SMAYBER8 on 6/21/2017.
- */
 
-public class TextMessage {
+public class Message {
 
     private String message;
     private String number;
-    public TextMessage()
+    public Message()
     {}
-    public TextMessage(String number, String message)
+    public Message(String number, String message)
     {
         this.number = number;
         this.message = message;
@@ -31,3 +28,4 @@ public class TextMessage {
         this.number = number;
     }
 }
+
