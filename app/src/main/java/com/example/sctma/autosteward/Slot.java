@@ -1,25 +1,25 @@
 package com.example.sctma.autosteward;
 
+import java.io.Serializable;
+
 /**
  * Created by SMAYBER8 on 6/22/2017.
  */
 
-public class Slot {
+public class Slot implements Serializable {
     private int OD;
     private int dayOfWeek;
     private String extension;
     private String name;
-    private String password;
     private String slot;
     private String key;
     public Slot(){}
-    public Slot(String key, int OD, int dayOfWeek, String extension, String name, String password, String slot)
+    public Slot(String key, int OD, int dayOfWeek, String extension, String name,  String slot)
     {
         this.OD = OD;
         this.dayOfWeek = dayOfWeek;
         this.extension = extension;
         this.name = name;
-        this.password = password;
         this.slot = slot;
         this.key = key;
     }
@@ -62,14 +62,6 @@ public class Slot {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getSlot() {

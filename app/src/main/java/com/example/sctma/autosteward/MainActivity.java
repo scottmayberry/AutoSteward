@@ -40,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Fine> midnightFines;
     ArrayList<Fine> trashFines;
     ArrayList<Fine> kitchenFines;
+    ArrayList<Brother>[] brothers;
     Slot[] slots;
     String[] stewardInfo;
+    PasswordHolder passwordHolder;
     //FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference fullRef;
 
@@ -254,7 +256,6 @@ public class MainActivity extends AppCompatActivity {
                     (int) getDoubleFromDatabase(dataSnapshot.child("dayOfWeek").getValue()),
                     (String) dataSnapshot.child("extension").getValue(),
                     (String) dataSnapshot.child("name").getValue(),
-                    (String) dataSnapshot.child("password").getValue(),
                     (String) dataSnapshot.child("slot").getValue());
             slots[(int)getDoubleFromDatabase(nSlot.getKey())] = nSlot;
 
@@ -267,7 +268,6 @@ public class MainActivity extends AppCompatActivity {
             slots[i].setDayOfWeek((int) getDoubleFromDatabase(dataSnapshot.child("dayOfWeek").getValue()));
             slots[i].setExtension((String) dataSnapshot.child("extension").getValue());
             slots[i].setName((String) dataSnapshot.child("name").getValue());
-            slots[i].setPassword((String) dataSnapshot.child("password").getValue());
             slots[i].setSlot((String) dataSnapshot.child("slot").getValue());
         }
 
@@ -330,15 +330,216 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+    ChildEventListener passwordListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            setPasswordInfo(dataSnapshot);
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            setPasswordInfo(dataSnapshot);
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+    ChildEventListener seniorListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            Brother bro = new Brother((String)dataSnapshot.child("email").getValue(),
+                    (String) dataSnapshot.child("name").getValue(),
+                    (String)dataSnapshot.child("phone").getValue(),
+                    getDoubleFromDatabase(dataSnapshot.child("slotsmissed").getValue()),
+                    (int)getDoubleFromDatabase(dataSnapshot.getKey()));
+            brothers[0].add(bro);
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            for(int i = 0; i < brothers[0].size();i++)
+                if(brothers[0].get(i).getKey() == (int)getDoubleFromDatabase(dataSnapshot.getKey()))
+                {
+                    brothers[0].get(i).setName((String) dataSnapshot.child("name").getValue());
+                    brothers[0].get(i).setEmail((String) dataSnapshot.child("email").getValue());
+                    brothers[0].get(i).setPhone((String) dataSnapshot.child("phone").getValue());
+                    brothers[0].get(i).setSlotsMissed(getDoubleFromDatabase(dataSnapshot.child("slotsmissed").getValue()));
+                }
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+            for(int i = brothers[0].size()-1; i >= 0;i--)
+                if(brothers[0].get(i).getKey() == (int)getDoubleFromDatabase(dataSnapshot.getKey()))
+                {
+                    brothers[0].remove(i);
+                    break;
+                }
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+    ChildEventListener juniorListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            Brother bro = new Brother((String)dataSnapshot.child("email").getValue(),
+                    (String) dataSnapshot.child("name").getValue(),
+                    (String)dataSnapshot.child("phone").getValue(),
+                    getDoubleFromDatabase(dataSnapshot.child("slotsmissed").getValue()),
+                    (int)getDoubleFromDatabase(dataSnapshot.getKey()));
+            brothers[1].add(bro);
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            for(int i = 0; i < brothers[1].size();i++)
+                if(brothers[1].get(i).getKey() == (int)getDoubleFromDatabase(dataSnapshot.getKey()))
+                {
+                    brothers[1].get(i).setName((String) dataSnapshot.child("name").getValue());
+                    brothers[1].get(i).setEmail((String) dataSnapshot.child("email").getValue());
+                    brothers[1].get(i).setPhone((String) dataSnapshot.child("phone").getValue());
+                    brothers[1].get(i).setSlotsMissed(getDoubleFromDatabase(dataSnapshot.child("slotsmissed").getValue()));
+                }
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+            for(int i = brothers[1].size()-1; i >= 0;i--)
+                if(brothers[1].get(i).getKey() == (int)getDoubleFromDatabase(dataSnapshot.getKey()))
+                {
+                    brothers[1].remove(i);
+                    break;
+                }
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+    ChildEventListener sophomoreListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            Brother bro = new Brother((String)dataSnapshot.child("email").getValue(),
+                    (String) dataSnapshot.child("name").getValue(),
+                    (String)dataSnapshot.child("phone").getValue(),
+                    getDoubleFromDatabase(dataSnapshot.child("slotsmissed").getValue()),
+                    (int)getDoubleFromDatabase(dataSnapshot.getKey()));
+            brothers[2].add(bro);
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            for(int i = 0; i < brothers[2].size();i++)
+                if(brothers[2].get(i).getKey() == (int)getDoubleFromDatabase(dataSnapshot.getKey()))
+                {
+                    brothers[2].get(i).setName((String) dataSnapshot.child("name").getValue());
+                    brothers[2].get(i).setEmail((String) dataSnapshot.child("email").getValue());
+                    brothers[2].get(i).setPhone((String) dataSnapshot.child("phone").getValue());
+                    brothers[2].get(i).setSlotsMissed(getDoubleFromDatabase(dataSnapshot.child("slotsmissed").getValue()));
+                }
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+            for(int i = brothers[2].size()-1; i >= 0;i--)
+                if(brothers[2].get(i).getKey() == (int)getDoubleFromDatabase(dataSnapshot.getKey()))
+                {
+                    brothers[2].remove(i);
+                    break;
+                }
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+    ChildEventListener freshmenListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            Brother bro = new Brother((String)dataSnapshot.child("email").getValue(),
+                    (String) dataSnapshot.child("name").getValue(),
+                    (String)dataSnapshot.child("phone").getValue(),
+                    getDoubleFromDatabase(dataSnapshot.child("slotsmissed").getValue()),
+                    (int)getDoubleFromDatabase(dataSnapshot.getKey()));
+            brothers[3].add(bro);
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            for(int i = 0; i < brothers[3].size();i++)
+                if(brothers[3].get(i).getKey() == (int)getDoubleFromDatabase(dataSnapshot.getKey()))
+                {
+                    brothers[3].get(i).setName((String) dataSnapshot.child("name").getValue());
+                    brothers[3].get(i).setEmail((String) dataSnapshot.child("email").getValue());
+                    brothers[3].get(i).setPhone((String) dataSnapshot.child("phone").getValue());
+                    brothers[3].get(i).setSlotsMissed(getDoubleFromDatabase(dataSnapshot.child("slotsmissed").getValue()));
+                }
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+            for(int i = brothers[3].size()-1; i >= 0;i--)
+                if(brothers[3].get(i).getKey() == (int)getDoubleFromDatabase(dataSnapshot.getKey()))
+                {
+                    brothers[3].remove(i);
+                    break;
+                }
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //theses are to be determined if there are fines currently out
         updateKitchenUI(false);
         updateDishesUI(false);
         updateMidnightsUI(false);
         updateTrashUI(false);
+
         //save all possible buttons for easy access.
         dishButton = (Button) findViewById(R.id.dishesButton);
         dishFineButton = (Button) findViewById(R.id.dishFineButton);
@@ -347,38 +548,52 @@ public class MainActivity extends AppCompatActivity {
         trashButton = (Button) findViewById(R.id.trashButton);
         trashFineButton = (Button) findViewById(R.id.trashFineButton);
         kitchenFineButton = (Button) findViewById(R.id.kitchenFineButton);
+
         //Instantiate database reference
         fullRef = FirebaseDatabase.getInstance().getReference();
+
         //instantiate all data storage
+        brothers = (ArrayList<Brother>[])new ArrayList[4];
+        for(int i = 0; i < brothers.length;i++)
+            brothers[i] = new ArrayList<Brother>();
+        passwordHolder = new PasswordHolder();
         dishFines = new ArrayList<>();
         midnightFines = new ArrayList<>();
         kitchenFines = new ArrayList<>();
         trashFines = new ArrayList<>();
         slots = new Slot[3];
         stewardInfo = new String[2];
+        
         //add listeners for new information
+        //listeners for brothers
+        fullRef.child("BrotherInfo").child("Seniors").addChildEventListener(seniorListener);
+        fullRef.child("BrotherInfo").child("Juniors").addChildEventListener(juniorListener);
+        fullRef.child("BrotherInfo").child("Sophomores").addChildEventListener(sophomoreListener);
+        fullRef.child("BrotherInfo").child("Freshmen").addChildEventListener(freshmenListener);
+
+        //listener for fines
         fullRef.child("CurrentFines").child("0").addChildEventListener(dishFinesListener);
         fullRef.child("CurrentFines").child("1").addChildEventListener(midnightFinesListener);
         fullRef.child("CurrentFines").child("2").addChildEventListener(trashFinesListener);
         fullRef.child("CurrentFines").child("3").addChildEventListener(kitchenFinesListener);
+
+        //listener for current slots
         fullRef.child("CurrentSlots").addChildEventListener(currentSlotsListener);
         fullRef.child("StewardInfo").addChildEventListener(stewardInfoListener);
 
-        /*if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.SEND_SMS)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.SEND_SMS},
-                        MY_PERMISSIONS_REQUEST_SEND_SMS);
-            }
-        }else {fullRef.child("Messages").addChildEventListener(messageListener);}*/
+        //listener for passwords
+        fullRef.child("Passwords").addChildEventListener(passwordListener);
     }
     public void completeDishes(View v)
     {
-        
+        /*Intent intent = new Intent(this, );
+        intent.putExtra("SLOT", slots[0]);
+        intent.putExtra("DISH_FINES", dishFines);*/
+        System.out.println(brothers[0]);
+        System.out.println(brothers[1]);
+        System.out.println(brothers[2]);
+        System.out.println(brothers[3]);
+
     }
     public void completeDishFines(View v)
     {
@@ -405,19 +620,41 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    fullRef.child("Messages").addChildEventListener(messageListener);
-                } else {
+    public void setPasswordInfo(DataSnapshot dataSnapshot)
+    {
+        switch(dataSnapshot.getKey())
+        {
+            case "dishFine": passwordHolder.setDishFine((String)dataSnapshot.getValue());
+                break;
+            case "dishSlot": passwordHolder.setDishSlot((String)dataSnapshot.getValue());
+                break;
+            case "kitchenFine": passwordHolder.setKitchenFine((String)dataSnapshot.getValue());
+                break;
+            case "master": passwordHolder.setMaster((String)dataSnapshot.getValue());
+                break;
+            case "midnightFine": passwordHolder.setMidnightFine((String)dataSnapshot.getValue());
+                break;
+            case "midnightSlot": passwordHolder.setMidnightSlot((String)dataSnapshot.getValue());
+                break;
+            case "protectFines":
+                if(((String)dataSnapshot.getValue()).toLowerCase().equals("yes"))
+                    passwordHolder.setProtectFines(true);
+                else
+                    passwordHolder.setProtectFines(false);
+                break;
+            case "protectSlots":
+                if(((String)dataSnapshot.getValue()).toLowerCase().equals("yes"))
+                    passwordHolder.setProtectSlots(true);
+                else
+                    passwordHolder.setProtectSlots(false);
+                break;
+            case "trashFine": passwordHolder.setTrashFine((String)dataSnapshot.getValue());
+                break;
+            case "trashSlot": passwordHolder.setTrashSlot((String)dataSnapshot.getValue());
+                break;
+        }
+    }
 
-                }
-            }
-        }//end of swithc
-    }//onRequest permissions
     protected void updateKitchenUI(boolean onOff)
     {
         int vis;
@@ -462,7 +699,6 @@ public class MainActivity extends AppCompatActivity {
         ((LinearLayout)findViewById(R.id.midnightsFineButtonLayout)).setVisibility(vis);
         ((LinearLayout)findViewById(R.id.midnightsFineTextLayout)).setVisibility(vis);
     }
-
     public double getDoubleFromDatabase(Object o)
     {
         if(o.getClass().getName().toLowerCase().equals("java.lang.long")) {
