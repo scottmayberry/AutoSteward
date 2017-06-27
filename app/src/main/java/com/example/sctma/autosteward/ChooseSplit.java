@@ -31,6 +31,7 @@ public class ChooseSplit extends AppCompatActivity {
         slotnum = intent.getIntExtra("SLOTNUM", 0);
         completeSlot = intent.getBooleanExtra("SLOT?", false);
         names = new ArrayList<>();
+        name = "";
         if(completeSlot) {
             name = MainActivity.slots[slotnum].getName();
             total = 1;
@@ -50,7 +51,7 @@ public class ChooseSplit extends AppCompatActivity {
         for(int i = 0; i < MainActivity.brothers.length;i++)
             for(int g = 0; g < MainActivity.brothers[i].size();g++)
             {
-                if(name == null || name != MainActivity.brothers[i].get(i).getName()) {
+                if(!MainActivity.brothers[i].get(g).getName().equals(name)) {
                     ToggleButton tb = new ToggleButton(this);
                     tb.setTextOff(MainActivity.brothers[i].get(g).getName());
                     tb.setTextOn(MainActivity.brothers[i].get(g).getName());
@@ -100,6 +101,9 @@ public class ChooseSplit extends AppCompatActivity {
         intent.putExtra("FINES?", true);
         intent.putExtra("SLOT?", completeSlot);
         intent.putExtra("NAMES", n);
+        intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+        startActivity(intent);
+        finish();
 
     }
 }

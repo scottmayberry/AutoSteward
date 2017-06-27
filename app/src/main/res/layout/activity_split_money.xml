@@ -22,11 +22,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:onClick="completeButtonPressed"
         android:text="Complete"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="16dp" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ScrollView
         android:layout_width="0dp"
@@ -50,24 +51,24 @@
     </ScrollView>
 
     <TextView
-        android:id="@+id/splitText"
+        android:id="@+id/totalText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
-        android:text="Total Split:"
+        android:layout_marginStart="16dp"
+        android:text="Total to Split:"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="16dp" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-        android:id="@+id/totalText"
+        android:id="@+id/splitText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Total:"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/splitText"
+        app:layout_constraintLeft_toRightOf="@+id/totalText"
         app:layout_constraintRight_toLeftOf="@+id/completeMoneySplitButton" />
 
 </android.support.constraint.ConstraintLayout>

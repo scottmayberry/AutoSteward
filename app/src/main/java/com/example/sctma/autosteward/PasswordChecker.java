@@ -22,6 +22,10 @@ public class PasswordChecker extends AppCompatActivity {
     boolean completeSlot;
     boolean override;
     Timer timer;
+    String[] names;
+    String[] emails;
+    String singleEmail;
+    int[] money;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,18 +35,53 @@ public class PasswordChecker extends AppCompatActivity {
         completeSlot = intent.getBooleanExtra("SLOT?", false);
         slotnum = intent.getIntExtra("SLOTNUM", 0);
         override = intent.getBooleanExtra("OVERRIDE", false);
+        money = intent.getIntArrayExtra("MONEYSPLIT");
+        names = intent.getStringArrayExtra("NAMES");
         slotPass = (EditText)(findViewById(R.id.editText));
         finePass = (EditText)(findViewById(R.id.editText2));
         ((TextView)(findViewById(R.id.wrongPasscodeText))).setVisibility(View.GONE);
-        if(fines)
+        if(fines) {
             finePassword = getFinePassword();
+            //send fine passwords to emails
+            if(names != null) {
+                emails = new String[names.length];
+                for(int k = 0; k < emails.length;k++)
+                    middleloop: for(int i = 0; i < MainActivity.brothers.length;i++)
+                        for(int g = 0; g < MainActivity.brothers[i].size();g++)
+                        {
+                            if(MainActivity.brothers[i].get(g).getName().equals(names[k])) {
+                                emails[k] = MainActivity.brothers[i].get(g).getEmail();
+                                break middleloop;
+                            }
+                        }//search for brothers
+                for(int i = 0; i < emails.length; i++) {
+                    String str = MainActivity.fullRef.child("Messages").push().getKey();
+                    if(!emails[i].contains("@"))
+                        emails[i] = emails[i] + "@mit.edu";
+                    MainActivity.fullRef.child("Messages").child(str).setValue(new Message(emails[i], "" + Message.getReferenceForEmail(slotnum, true)));
+                }
+            }//if names is not null
+        }
         else
         {
             finePass.setVisibility(View.GONE);
             ((Space)findViewById(R.id.removeSpace1)).setVisibility(View.GONE);
         }
-        if(completeSlot)
+        if(completeSlot) {
             slotPassword = getSlotPassword();
+            //send password again through email
+            singleEmail = "";
+            outerloop: for(int i = 0; i < MainActivity.brothers.length;i++)
+                for(int g = 0; g < MainActivity.brothers[i].size();g++)
+                {
+                    if(MainActivity.brothers[i].get(g).getName().equals(MainActivity.slots[slotnum].getName())) {
+                        singleEmail = MainActivity.brothers[i].get(g).getEmail();
+                        break outerloop;
+                    }
+                }//search for brothers
+            String str = MainActivity.fullRef.child("Messages").push().getKey();
+            MainActivity.fullRef.child("Messages").child(str).setValue(new Message(singleEmail,"" + Message.getReferenceForEmail(slotnum, false)));
+        }
         else
         {
             slotPass.setVisibility(View.GONE);
@@ -56,11 +95,12 @@ public class PasswordChecker extends AppCompatActivity {
             ((TextView)(findViewById(R.id.overrideText))).setVisibility(View.VISIBLE);
             slotPassword = MainActivity.passwordHolder.getMaster();
             String str = MainActivity.fullRef.child("Messages").push().getKey();
-            MainActivity.fullRef.child("Messages").child(str).setValue(new Message(MainActivity.stewardInfo[0],"override"));
             //use this to do cloud function sending email to steward
+            String em = MainActivity.stewardInfo[0];
+            if(!em.contains("@"))
+                em = em + "@mit.edu";
+            MainActivity.fullRef.child("Messages").child(str).setValue(new Message(em,"" + Message.getReferenceForEmailMaster()));
         }
-
-
     }
     private String getFinePassword()
     {
@@ -111,6 +151,11 @@ public class PasswordChecker extends AppCompatActivity {
             goToNext.putExtra("SLOTNUM", slotnum);
             goToNext.putExtra("FINES?",fines);
             goToNext.putExtra("SLOT?", completeSlot);
+            goToNext.putExtra("NAMES", names);
+            goToNext.putExtra("MONEYSPLIT", money);
+            goToNext.putExtra("EMAILS", emails);
+            if(completeSlot)
+                goToNext.putExtra("SINGLEEMAIL", singleEmail);
             goToNext.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
             startActivity(goToNext);
             finish();

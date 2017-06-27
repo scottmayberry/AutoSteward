@@ -243,8 +243,8 @@ public class MainActivity extends AppCompatActivity {
                     (String) dataSnapshot.child("extension").getValue(),
                     (String) dataSnapshot.child("name").getValue(),
                     (String) dataSnapshot.child("slot").getValue());
-            slots[(int)getDoubleFromDatabase(nSlot.getKey())] = nSlot;
-
+            int i = Integer.parseInt(dataSnapshot.getKey());
+            slots[i] = nSlot;
         }
 
         @Override

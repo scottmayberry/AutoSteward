@@ -62,6 +62,15 @@ public class Checker extends AppCompatActivity {
             }
         },30000L);
     }
+    public void completeAll(View v)
+    {
+        Intent intent = new Intent(this, ChooseSplit.class);
+        intent.putExtra("SLOTNUM", slotnum);
+        intent.putExtra("SLOT?", true);
+        intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+        startActivity(intent);
+        finish();
+    }
     public void slotOnly(View v)
     {
         Intent intent;
