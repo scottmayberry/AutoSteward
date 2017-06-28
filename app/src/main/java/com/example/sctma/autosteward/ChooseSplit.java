@@ -13,6 +13,8 @@ import android.widget.ToggleButton;
 
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ChooseSplit extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public class ChooseSplit extends AppCompatActivity {
     int total;
     ArrayList<String> names;
     TextView namesText;
+    Timer timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,15 @@ public class ChooseSplit extends AppCompatActivity {
         classes[2] = (LinearLayout)findViewById(R.id.sophomoreLayout);
         classes[3] = (LinearLayout)findViewById(R.id.freshmenLayout);
         populateClasses();
+        timer = new Timer(true);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Intent result = new Intent();
+                setResult(1, result);
+                finish();
+            }
+        }, 40000L);
     }
     private void populateClasses()
     {

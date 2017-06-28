@@ -14,6 +14,8 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SplitMoney extends AppCompatActivity {
 
@@ -27,6 +29,7 @@ public class SplitMoney extends AppCompatActivity {
     static TextView splitText;
     LinearLayout moneyLayout;
     EditTextMoneyListener[] editTextMoneyListeners;
+    Timer timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +51,15 @@ public class SplitMoney extends AppCompatActivity {
         splitText.setText("Total: " + totalMoney);
         moneyLayout = (LinearLayout)findViewById(R.id.moneyLayout);
         populateList();
-
+        timer = new Timer(true);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Intent result = new Intent();
+                setResult(1, result);
+                finish();
+            }
+        }, 40000L);
     }
     private void splitMoneyEqually()
     {

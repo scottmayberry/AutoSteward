@@ -60,7 +60,7 @@ public class Checker extends AppCompatActivity {
                 setResult(MainActivity.OPERATION_CANCELLED, ret);
                 finish();
             }
-        },30000L);
+        },20000L);
     }
     public void completeAll(View v)
     {

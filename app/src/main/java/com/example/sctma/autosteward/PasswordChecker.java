@@ -10,6 +10,7 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class PasswordChecker extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class PasswordChecker extends AppCompatActivity {
     String[] emails;
     String singleEmail;
     int[] money;
+    int correct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,26 +41,26 @@ public class PasswordChecker extends AppCompatActivity {
         names = intent.getStringArrayExtra("NAMES");
         slotPass = (EditText)(findViewById(R.id.editText));
         finePass = (EditText)(findViewById(R.id.editText2));
-        ((TextView)(findViewById(R.id.wrongPasscodeText))).setVisibility(View.GONE);
+        correct = 0;
         if(fines) {
             finePassword = getFinePassword();
             //send fine passwords to emails
-            if(names != null) {
+            if (names != null) {
                 emails = new String[names.length];
-                for(int k = 0; k < emails.length;k++)
-                    middleloop: for(int i = 0; i < MainActivity.brothers.length;i++)
-                        for(int g = 0; g < MainActivity.brothers[i].size();g++)
-                        {
-                            if(MainActivity.brothers[i].get(g).getName().equals(names[k])) {
+                for (int k = 0; k < emails.length; k++)
+                    middleloop:for (int i = 0; i < MainActivity.brothers.length; i++)
+                        for (int g = 0; g < MainActivity.brothers[i].size(); g++) {
+                            if (MainActivity.brothers[i].get(g).getName().equals(names[k])) {
                                 emails[k] = MainActivity.brothers[i].get(g).getEmail();
                                 break middleloop;
                             }
                         }//search for brothers
-                for(int i = 0; i < emails.length; i++) {
+                for (int i = 0; i < emails.length; i++) {
                     String str = MainActivity.fullRef.child("Messages").push().getKey();
-                    if(!emails[i].contains("@"))
+                    if (!emails[i].contains("@"))
                         emails[i] = emails[i] + "@mit.edu";
-                    MainActivity.fullRef.child("Messages").child(str).setValue(new Message(emails[i], "" + Message.getReferenceForEmail(slotnum, true)));
+                    if(MainActivity.passwordHolder.isProtectFines())
+                        MainActivity.fullRef.child("Messages").child(str).setValue(new Message(emails[i], "" + Message.getReferenceForEmail(slotnum, true)));
                 }
             }//if names is not null
         }
@@ -80,7 +82,8 @@ public class PasswordChecker extends AppCompatActivity {
                     }
                 }//search for brothers
             String str = MainActivity.fullRef.child("Messages").push().getKey();
-            MainActivity.fullRef.child("Messages").child(str).setValue(new Message(singleEmail,"" + Message.getReferenceForEmail(slotnum, false)));
+            if(MainActivity.passwordHolder.isProtectSlots())
+                MainActivity.fullRef.child("Messages").child(str).setValue(new Message(singleEmail,"" + Message.getReferenceForEmail(slotnum, false)));
         }
         else
         {
@@ -101,6 +104,27 @@ public class PasswordChecker extends AppCompatActivity {
                 em = em + "@mit.edu";
             MainActivity.fullRef.child("Messages").child(str).setValue(new Message(em,"" + Message.getReferenceForEmailMaster()));
         }
+        if(!MainActivity.passwordHolder.isProtectFines())
+        {
+            finePass.setVisibility(View.GONE);
+            ((Space)findViewById(R.id.removeSpace1)).setVisibility(View.GONE);
+        }
+        if(!MainActivity.passwordHolder.isProtectSlots() && !override)
+        {
+            slotPass.setVisibility(View.GONE);
+            ((Space)findViewById(R.id.removeSpace1)).setVisibility(View.GONE);
+        }
+        attemptSubmit(new View(this));
+        ((TextView) (findViewById(R.id.wrongPasscodeText))).setVisibility(View.INVISIBLE);
+        timer = new Timer(true);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Intent result = new Intent();
+                setResult(1, result);
+                finish();
+            }
+        }, 120000L);
     }
     private String getFinePassword()
     {
@@ -125,12 +149,11 @@ public class PasswordChecker extends AppCompatActivity {
     }
     public void attemptSubmit(View v)
     {
-        int correct = 0;
         if(fines)
         {
             //check fines passcode
             String str = finePass.getText().toString();
-            if(str.equals(finePassword))
+            if(str.equals(finePassword) || !MainActivity.passwordHolder.isProtectFines())
                 correct++;
         }
         else
@@ -139,7 +162,7 @@ public class PasswordChecker extends AppCompatActivity {
         {
             //check slot passcode
             String str = slotPass.getText().toString();
-            if(str.equals(slotPassword))
+            if(str.equals(slotPassword) || (!MainActivity.passwordHolder.isProtectSlots() && !override))
                 correct++;
         }
         else
@@ -160,7 +183,9 @@ public class PasswordChecker extends AppCompatActivity {
             startActivity(goToNext);
             finish();
         }
-        else
-            ((TextView)(findViewById(R.id.wrongPasscodeText))).setVisibility(View.VISIBLE);
+        else {
+            ((TextView) (findViewById(R.id.wrongPasscodeText))).setVisibility(View.VISIBLE);
+            correct = 0;
+        }
     }//hit the submit button
 }

@@ -30,7 +30,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal|center"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/dishesButton"
@@ -42,9 +43,10 @@
         </LinearLayout>
 
         <Space
-            android:layout_weight="1"
+            android:id="@+id/dishFineSpace"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight=".25" />
 
 
         <LinearLayout
@@ -58,14 +60,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
-                android:text="TextView" />
+                android:gravity="center_vertical|center_horizontal"
+                android:text="TextView"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/currentDishFineNamesText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -86,13 +91,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="completeDishFines"
                 android:text="Pick Up Dish Fine" />
         </LinearLayout>
+
         <Space
-            android:id="@+id/dishFineSpace"
-            android:layout_weight="1"
+            android:id="@+id/dishSpace"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,7 +112,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal|center"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/midnightsButton"
@@ -118,9 +126,9 @@
 
         <Space
             android:id="@+id/midnightsFineSpace"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight=".25" />
 
         <LinearLayout
             android:id="@+id/midnightsFineTextLayout"
@@ -133,14 +141,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
-                android:text="TextView" />
+                android:gravity="center_vertical|center_horizontal"
+                android:text="TextView"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/currentMidnightsFineNamesText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -180,19 +191,21 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal|center"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/trashButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="completeTrash"
                 android:text="Complete Trash" />
         </LinearLayout>
 
         <Space
             android:id="@+id/trashFineSpace"
-            android:layout_weight="1"
+            android:layout_weight=".25"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -207,14 +220,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
-                android:text="TextView" />
+                android:gravity="center_vertical|center_horizontal"
+                android:text="TextView"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/currentTrashFineNamesText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -234,6 +250,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="completeTrashFines"
                 android:text="Pick Up Trash Fine" />
 
         </LinearLayout>
@@ -255,14 +272,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
-                android:text="TextView" />
+                android:gravity="center_vertical|center_horizontal"
+                android:text="TextView"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/currentKitchenFineNamesText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -283,6 +303,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="completeKitchenFines"
                 android:text="Pick Up Kitchen Fine" />
         </LinearLayout>
 

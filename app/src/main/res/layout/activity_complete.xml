@@ -7,19 +7,37 @@
     tools:context="com.example.sctma.autosteward.Complete">
 
     <TextView
-        android:id="@+id/namesText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="310dp" />
-
-    <TextView
         android:id="@+id/completeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Complete"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="48sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/slotNamesText" />
+
+    <TextView
+        android:id="@+id/slotNamesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="99dp" />
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/fineNamesText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/completeText" />
+
+    <TextView
+        android:id="@+id/fineNamesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/slotNamesText" />
 
 </android.support.constraint.ConstraintLayout>

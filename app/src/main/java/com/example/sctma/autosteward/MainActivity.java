@@ -1,22 +1,14 @@
 package com.example.sctma.autosteward;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.renderscript.Sampler;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.SmsManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Space;
-import android.Manifest;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +16,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -37,6 +28,19 @@ public class MainActivity extends AppCompatActivity {
     Button trashButton;
     Button trashFineButton;
     Button kitchenFineButton;
+
+    TextView dishText;
+    TextView dishFineIntro;
+    TextView currentDishFineNames;
+    TextView midnightText;
+    TextView midnightFineIntro;
+    TextView currentMidnightFineNames;
+    TextView trashText;
+    TextView trashFineIntro;
+    TextView currentTrashFineNames;
+    TextView kitchenFineIntro;
+    TextView currentKitchenFineNames;
+
     static ArrayList<Fine> dishFines;
     static ArrayList<Fine> midnightFines;
     static ArrayList<Fine> trashFines;
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             Fine nFine = new Fine((String)dataSnapshot.getKey(),(String)dataSnapshot.child("name").getValue(),
                     getDoubleFromDatabase(dataSnapshot.child("fine").getValue()));
             dishFines.add(nFine);
+            updateDishFineText();
         }
 
         @Override
@@ -82,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     dishFines.get(i).setFine(getDoubleFromDatabase(dataSnapshot.child("fine").getValue()));
                     dishFines.get(i).setName((String) dataSnapshot.child("name").getValue());
                 }
+            updateDishFineText();
         }
 
         @Override
@@ -94,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             if(dishFines.size() == 0)
                 updateDishesUI(false);
+            updateDishFineText();
         }
 
         @Override
@@ -105,6 +112,27 @@ public class MainActivity extends AppCompatActivity {
         public void onCancelled(DatabaseError databaseError) {
 
         }
+        private void updateDishFineText()
+        {
+            if(dishFines.size() == 0)
+            {
+                dishFineIntro.setText("Dish Fine: ");
+                currentDishFineNames.setText("None");
+                return;
+            }
+            String text = "";
+            int sum = 0;
+            for(int i = 0; i < dishFines.size()-1; i++)
+            {
+                text = text + dishFines.get(i).getName() + " - " + dishFines.get(i).getFine() + ", ";
+                sum = sum + (int)dishFines.get(i).getFine();
+            }//dish fines size
+            text = text + dishFines.get(dishFines.size()-1).getName() + " - " + dishFines.get(dishFines.size()-1).getFine();
+            sum = sum + (int)dishFines.get(dishFines.size()-1).getFine();
+            dishFineIntro.setText("Dish Fine: " + sum);
+            currentDishFineNames.setText("   " + text);
+        }
+
     };
     ChildEventListener midnightFinesListener = new ChildEventListener() {
 
@@ -115,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
             Fine nFine = new Fine((String)dataSnapshot.getKey(),(String)dataSnapshot.child("name").getValue(),
                     getDoubleFromDatabase(dataSnapshot.child("fine").getValue()));
             midnightFines.add(nFine);
+            updateMidnightFineText();
         }
 
         @Override
@@ -125,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                     midnightFines.get(i).setFine(getDoubleFromDatabase(dataSnapshot.child("fine").getValue()));
                     midnightFines.get(i).setName((String)dataSnapshot.child("name").getValue());
                 }
+            updateMidnightFineText();
         }
 
         @Override
@@ -137,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             if(midnightFines.size() == 0)
                 updateMidnightsUI(false);
-
+            updateMidnightFineText();
         }
 
         @Override
@@ -148,6 +178,26 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onCancelled(DatabaseError databaseError) {
 
+        }
+        private void updateMidnightFineText()
+        {
+            if(midnightFines.size() == 0)
+            {
+                midnightFineIntro.setText("Midnights Fine: ");
+                currentMidnightFineNames.setText("None");
+                return;
+            }
+            String text = "";
+            int sum = 0;
+            for(int i = 0; i < midnightFines.size()-1; i++)
+            {
+                text = text + midnightFines.get(i).getName() + " - " + midnightFines.get(i).getFine() + ", ";
+                sum = sum + (int)midnightFines.get(i).getFine();
+            }//midnight fines size
+            text = text + midnightFines.get(midnightFines.size()-1).getName() + " - " + midnightFines.get(midnightFines.size()-1).getFine();
+            sum = sum + (int)midnightFines.get(midnightFines.size()-1).getFine();
+            midnightFineIntro.setText("Midnights Fine: " + sum);
+            currentMidnightFineNames.setText("   " + text);
         }
     };
     ChildEventListener trashFinesListener = new ChildEventListener() {
@@ -159,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
             Fine nFine = new Fine((String) dataSnapshot.getKey(), (String) dataSnapshot.child("name").getValue(),
                     getDoubleFromDatabase(dataSnapshot.child("fine").getValue()));
             trashFines.add(nFine);
+            updateTrashFineText();
         }
 
         @Override
@@ -168,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
                     trashFines.get(i).setFine(getDoubleFromDatabase(dataSnapshot.child("fine").getValue()));
                     trashFines.get(i).setName((String) dataSnapshot.child("name").getValue());
                 }
+            updateTrashFineText();
         }
 
         @Override
@@ -179,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             if (trashFines.size() == 0)
                 updateTrashUI(false);
-
+            updateTrashFineText();
         }
 
         @Override
@@ -191,6 +243,27 @@ public class MainActivity extends AppCompatActivity {
         public void onCancelled(DatabaseError databaseError) {
 
         }
+
+        private void updateTrashFineText()
+        {
+            if(trashFines.size() == 0)
+            {
+                trashFineIntro.setText("Trash Fine: ");
+                currentTrashFineNames.setText("None");
+                return;
+            }
+            String text = "";
+            int sum = 0;
+            for(int i = 0; i < trashFines.size()-1; i++)
+            {
+                text = text + trashFines.get(i).getName() + " - " + trashFines.get(i).getFine() + ", ";
+                sum = sum + (int)trashFines.get(i).getFine();
+            }//trash fines size
+            text = text + trashFines.get(trashFines.size()-1).getName() + " - " + trashFines.get(trashFines.size()-1).getFine();
+            sum = sum + (int)trashFines.get(trashFines.size()-1).getFine();
+            trashFineIntro.setText("Trash Fine: " + sum);
+            currentTrashFineNames.setText("   " + text);
+        }
     };
     ChildEventListener kitchenFinesListener = new ChildEventListener() {
 
@@ -201,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
             Fine nFine = new Fine((String)dataSnapshot.getKey(),(String)dataSnapshot.child("name").getValue(),
                     getDoubleFromDatabase(dataSnapshot.child("fine").getValue()));
             kitchenFines.add(nFine);
+            updateKitchenFineText();
         }
 
         @Override
@@ -210,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
                     kitchenFines.get(i).setFine(getDoubleFromDatabase(dataSnapshot.child("fine").getValue()));
                     kitchenFines.get(i).setName((String) dataSnapshot.child("name").getValue());
                 }
+            updateKitchenFineText();
         }
 
         @Override
@@ -222,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             if(kitchenFines.size() == 0)
                 updateKitchenUI(false);
+            updateKitchenFineText();
         }
 
         @Override
@@ -232,6 +308,26 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onCancelled(DatabaseError databaseError) {
 
+        }
+        private void updateKitchenFineText()
+        {
+            if(kitchenFines.size() == 0)
+            {
+                kitchenFineIntro.setText("Kitchen Fine: ");
+                currentKitchenFineNames.setText("None");
+                return;
+            }
+            String text = "";
+            int sum = 0;
+            for(int i = 0; i < kitchenFines.size()-1; i++)
+            {
+                text = text + kitchenFines.get(i).getName() + " - " + kitchenFines.get(i).getFine() + ", ";
+                sum = sum + (int)kitchenFines.get(i).getFine();
+            }//kitchen fines size
+            text = text + kitchenFines.get(kitchenFines.size()-1).getName() + " - " + kitchenFines.get(kitchenFines.size()-1).getFine();
+            sum = sum + (int)kitchenFines.get(kitchenFines.size()-1).getFine();
+            kitchenFineIntro.setText("Kitchen Fine: " + sum);
+            currentKitchenFineNames.setText("   " + text);
         }
     };
     ChildEventListener currentSlotsListener = new ChildEventListener() {
@@ -244,18 +340,45 @@ public class MainActivity extends AppCompatActivity {
                     (String) dataSnapshot.child("name").getValue(),
                     (String) dataSnapshot.child("slot").getValue());
             int i = Integer.parseInt(dataSnapshot.getKey());
+            boolean turnOn = true;
+            if(nSlot.getName().equals("Done") || nSlot.getName().equals("Steward"))
+                turnOn = false;
+            switch (i) {
+                case 0: dishButton.setEnabled(turnOn);
+                    dishText.setText(nSlot.getSlot() + ": " + nSlot.getName());
+
+                    break;
+                case 1: midnightsButton.setEnabled(turnOn);
+                    midnightText.setText(nSlot.getSlot() + ": " + nSlot.getName());
+                    break;
+                case 2: trashButton.setEnabled(turnOn);
+                    trashText.setText(nSlot.getSlot() + ": " + nSlot.getName());
+            }
             slots[i] = nSlot;
         }
 
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            int i = (int)getDoubleFromDatabase(dataSnapshot.getKey());
+            int i = Integer.parseInt(dataSnapshot.getKey());
             slots[i].setOD((int) getDoubleFromDatabase(dataSnapshot.child("OD").getValue()));
             slots[i].setDayOfWeek((int) getDoubleFromDatabase(dataSnapshot.child("dayOfWeek").getValue()));
             slots[i].setExtension((String) dataSnapshot.child("extension").getValue());
             slots[i].setName((String) dataSnapshot.child("name").getValue());
             slots[i].setSlot((String) dataSnapshot.child("slot").getValue());
-        }
+            boolean turnOn = true;
+            if(slots[i].getName().equals("Done") || slots[i].getName().equals("Steward"))
+                turnOn = false;
+            switch (i) {
+                case 0: dishButton.setEnabled(turnOn);
+                    dishText.setText(slots[i].getSlot() + ": " + slots[i].getName());
+                    break;
+                case 1: midnightsButton.setEnabled(turnOn);
+                    midnightText.setText(slots[i].getSlot() + ": " + slots[i].getName());
+                    break;
+                case 2: trashButton.setEnabled(turnOn);
+                    trashText.setText(slots[i].getSlot() + ": " + slots[i].getName());
+            }
+        }//on child changed
 
         @Override
         public void onChildRemoved(DataSnapshot dataSnapshot) {
@@ -535,6 +658,30 @@ public class MainActivity extends AppCompatActivity {
         trashFineButton = (Button) findViewById(R.id.trashFineButton);
         kitchenFineButton = (Button) findViewById(R.id.kitchenFineButton);
 
+        //disable buttons before load
+        dishButton.setEnabled(false);
+        midnightsButton.setEnabled(false);
+        trashButton.setEnabled(false);
+
+        //save all textviews for ease of access
+        dishText = (TextView)findViewById(R.id.dishesText);
+        dishFineIntro = (TextView)findViewById(R.id.dishFineCurrentOnlyText);
+        currentDishFineNames = (TextView) findViewById(R.id.currentDishFineNamesText);
+        midnightText = (TextView)findViewById(R.id.midnightsText);
+        midnightFineIntro = (TextView)findViewById(R.id.midnightsFineCurrentOnlyText);
+        currentMidnightFineNames = (TextView)findViewById(R.id.currentMidnightsFineNamesText);
+        trashText = (TextView)findViewById(R.id.trashText);
+        trashFineIntro = (TextView)findViewById(R.id.trashFineCurrentOnlyText);
+        currentTrashFineNames = (TextView)findViewById(R.id.currentTrashFineNamesText);
+        kitchenFineIntro = (TextView)findViewById(R.id.kitchenFineCurrentOnlyText);
+        currentKitchenFineNames = (TextView) findViewById(R.id.currentKitchenFineNamesText);
+
+        //set fines to bold
+        dishFineIntro.setTypeface(null, Typeface.BOLD);
+        midnightFineIntro.setTypeface(null, Typeface.BOLD);
+        trashFineIntro.setTypeface(null, Typeface.BOLD);
+        kitchenFineIntro.setTypeface(null, Typeface.BOLD);
+
         //Instantiate database reference
         fullRef = FirebaseDatabase.getInstance().getReference();
 
@@ -579,7 +726,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void completeDishFines(View v)
     {
-
+        Intent intent = new Intent(this, ChooseSplit.class);
+        intent.putExtra("REQUEST", DISH_FINE_REQUEST);
+        intent.putExtra("SLOTNUM", 0);
+        startActivityForResult(intent, DISH_FINE_REQUEST);
     }
     public void completeMidnights(View v)
     {
@@ -597,15 +747,24 @@ public class MainActivity extends AppCompatActivity {
     }
     public void completeTrash(View v)
     {
-
+        Intent intent = new Intent(this, Checker.class);
+        intent.putExtra("REQUEST", TRASH_SLOT_REQUEST);
+        intent.putExtra("SLOTNUM", 2);
+        startActivityForResult(intent, TRASH_SLOT_REQUEST);
     }
     public void completeTrashFines(View v)
     {
-
+        Intent intent = new Intent(this, ChooseSplit.class);
+        intent.putExtra("REQUEST", TRASH_FINE_REQUEST);
+        intent.putExtra("SLOTNUM", 2);
+        startActivityForResult(intent, TRASH_FINE_REQUEST);
     }
     public void completeKitchenFines(View v)
     {
-
+        Intent intent = new Intent(this, ChooseSplit.class);
+        intent.putExtra("REQUEST", KITCHEN_FINE_REQUEST);
+        intent.putExtra("SLOTNUM", 3);
+        startActivityForResult(intent, KITCHEN_FINE_REQUEST);
     }
 
     @Override
@@ -664,8 +823,9 @@ public class MainActivity extends AppCompatActivity {
     protected void updateDishesUI(boolean onOff)
     {
         int vis;
-        if(onOff)
+        if(onOff) {
             vis = View.VISIBLE;
+        }
         else
             vis = View.GONE;
         ((Space)findViewById(R.id.dishFineSpace)).setVisibility(vis);
@@ -704,4 +864,5 @@ public class MainActivity extends AppCompatActivity {
         else
             return 0;
     }
+
 }
